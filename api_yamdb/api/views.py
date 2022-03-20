@@ -1,17 +1,18 @@
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
+
 from rest_framework import permissions, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import AccessToken
-from reviews.models import User
 
 from api.pagination import UserPagination
 from api.permissions import IsAdminOrSuperUser
 from api.serializers import (SelfEditSerializer, SignUpSerializer,
                              TokenSerializer, UserSerializer)
+from reviews.models import User
 
 FROM_EMAIL = 'info@yamdb.com'
 EMAIL_SUBJECT = 'Registration in YaMDb'
