@@ -54,6 +54,12 @@ class User(AbstractUser):
     class Meta:
         verbose_name_plural = 'Пользователи'
         ordering = ('id',)
+        constraints = [
+            models.CheckConstraint(
+                check=~models.Q(username__iexact='me'),
+                name='username_me_is_not_allowed'
+            )
+        ]
 
     def __str__(self):
         return self.username
