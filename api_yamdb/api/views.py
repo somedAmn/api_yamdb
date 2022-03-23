@@ -1,25 +1,18 @@
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
-from django.db.models import Avg
 from django.shortcuts import get_object_or_404
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import filters, status, permissions, viewsets
+
+from rest_framework import permissions, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework_simplejwt.tokens import AccessToken
-from rest_framework.pagination import PageNumberPagination
 from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import AccessToken
 
-from .filters import TitleFilter
-from .serializers import (CategorySerializer, GenreSerializer,
-                          TitleSerializer, TitlePostSerializer,
-                          SelfEditSerializer, SignUpSerializer,
-                          TokenSerializer, UserSerializer)
-from .mixins import CreateListDeleteViewSet
-from .pagination import UserPagination
-from .permissions import IsAdminOrReadOnly, IsAdminOrSuperUser
-from reviews.models import User, Category, Genre, Title
-
+from api.pagination import UserPagination
+from api.permissions import IsAdminOrSuperUser
+from api.serializers import (SelfEditSerializer, SignUpSerializer,
+                             TokenSerializer, UserSerializer)
+from reviews.models import User
 
 FROM_EMAIL = 'info@yamdb.com'
 EMAIL_SUBJECT = 'Registration in YaMDb'

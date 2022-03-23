@@ -1,9 +1,6 @@
-from django.utils import timezone
-from django.core.validators import MaxValueValidator
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-from reviews import models
 from reviews.models import User
 
 
