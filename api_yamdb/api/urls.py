@@ -4,6 +4,8 @@ from rest_framework.routers import DefaultRouter
 
 from api.views import APISignup, ApiTokenObtain, UserViewSet
 
+app_name = 'api'
+
 router = DefaultRouter()
 router.register('users', UserViewSet, basename='users')
 
