@@ -1,23 +1,61 @@
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
+from django.db.models import Avg
 from django.shortcuts import get_object_or_404
-
-from rest_framework import permissions, status, viewsets
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters, status, permissions, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import AccessToken
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.views import APIView
 
-from api.pagination import UserPagination
-from api.permissions import IsAdminOrSuperUser
-from api.serializers import (SelfEditSerializer, SignUpSerializer,
-                             TokenSerializer, UserSerializer)
-from reviews.models import User
+from .filters import TitleFilter
+from .serializers import (CategorySerializer, GenreSerializer,
+                          TitleSerializer, TitlePostSerializer,
+                          SelfEditSerializer, SignUpSerializer,
+                          TokenSerializer, UserSerializer)
+from .mixins import CreateListDeleteViewSet
+from .pagination import UserPagination
+from .permissions import IsAdminOrReadOnly, IsAdminOrSuperUser
+from reviews.models import User, Category, Genre, Title
+
 
 FROM_EMAIL = 'info@yamdb.com'
 EMAIL_SUBJECT = 'Registration in YaMDb'
 EMAIL_MASSAGE = format('Confirmation code: {code}')
 WRONG_CODE_MESSAGE = 'Confirmation code is incorrect'
+
+class CategoryGenreViewSet(CreateListDeleteViewSet):
+    permission_classes = (IsAdminOrReadOnly,)
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('name',)
+    lookup_field = 'slug'
+
+
+class CategoryViewSet(CategoryGenreViewSet):
+    queryset = Category.objects.all()
+    serializer = CategorySerializer
+
+
+class GenreViewSet(CategoryGenreViewSet):
+    queryset = Genre.objects.all()
+    serializer_class = GenreSerializer
+
+
+class TitleViewSet(viewsets.ModelViewSet):
+    queryset = Title.objects.all().annotate(rating=Avg('reviews__score'))
+    pagination_class = PageNumberPagination
+    ordering = ('name',)
+    permission_classes = (IsAdminOrReadOnly,)
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter,
+                       filters.OrderingFilter)
+    filterset_class = TitleFilter
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return TitleSerializer
+        return TitlePostSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
