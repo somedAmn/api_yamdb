@@ -19,4 +19,4 @@ class TitleFilter(rest_framework.FilterSet):
 
     class Meta:
         model = Title
-        field = ('name', 'genre', 'category', 'year')
+        fields = ('name', 'genre', 'category', 'year')

@@ -121,6 +121,10 @@ class Title(models.Model):
         null=True,
         verbose_name = 'Описание',
     )
+    genre = models.ManyToManyField(
+        Genre,
+        verbose_name='Жанр'
+    )
     category = models.ForeignKey(
         Category,
         blank=True,

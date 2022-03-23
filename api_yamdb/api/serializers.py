@@ -38,7 +38,7 @@ class TitlePostSerializer(serializers.ModelSerializer):
         slug_field='slug',
         queryset=models.Genre.objects.all()
     )
-    categpry = serializers.SlugRelatedField(
+    category = serializers.SlugRelatedField(
         slug_field='slug',
         queryset=models.Category.objects.all()
     )

@@ -35,7 +35,7 @@ class CategoryGenreViewSet(CreateListDeleteViewSet):
 
 class CategoryViewSet(CategoryGenreViewSet):
     queryset = Category.objects.all()
-    serializer = CategorySerializer
+    serializer_class = CategorySerializer
 
 
 class GenreViewSet(CategoryGenreViewSet):
@@ -44,7 +44,7 @@ class GenreViewSet(CategoryGenreViewSet):
 
 
 class TitleViewSet(viewsets.ModelViewSet):
-    queryset = Title.objects.all().annotate(rating=Avg('reviews__score'))
+    queryset = Title.objects.all()
     pagination_class = PageNumberPagination
     ordering = ('name',)
     permission_classes = (IsAdminOrReadOnly,)
