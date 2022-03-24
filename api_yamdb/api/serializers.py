@@ -1,5 +1,3 @@
-from django.core.validators import MaxValueValidator
-from django.utils import timezone
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
