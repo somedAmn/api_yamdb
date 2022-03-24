@@ -3,6 +3,8 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils import timezone
 
+from .validators import custom_year_validator
+
 USER = 'user'
 MODERATOR = 'moderator'
 ADMIN = 'admin'
@@ -112,9 +114,7 @@ class Title(models.Model):
     )
     year = models.IntegerField(
         verbose_name='Год выхода',
-        validators=(MaxValueValidator(
-            timezone.now().year,
-            message='Год не может быть больше текущего!'),)
+        validators=(custom_year_validator,)
     )
     description = models.TextField(
         blank=True,

@@ -5,6 +5,7 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
 from reviews.models import Category, Comment, Genre, Review, Title, User
+from reviews.validators import custom_year_validator
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -42,10 +43,7 @@ class TitlePostSerializer(serializers.ModelSerializer):
         queryset=Category.objects.all()
     )
     year = serializers.IntegerField(
-        validators=(MaxValueValidator(
-            timezone.now().year,
-            message='Год не может быть больше текущего!'
-        ),)
+        validators=(custom_year_validator,)
     )
 
     class Meta:
