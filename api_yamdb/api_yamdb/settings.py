@@ -97,6 +97,12 @@ EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
 
+FROM_EMAIL = 'info@yamdb.com'
+
+EMAIL_SUBJECT = 'Registration in YaMDb'
+
+WRONG_CODE_MESSAGE = 'Confirmation code is incorrect'
+
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',

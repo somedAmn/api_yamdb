@@ -12,12 +12,10 @@ from api.pagination import UserPagination
 from api.permissions import IsAdminOrSuperUser
 from api.serializers import (SelfEditSerializer, SignUpSerializer,
                              TokenSerializer, UserSerializer)
+from api_yamdb.settings import EMAIL_SUBJECT, FROM_EMAIL, WRONG_CODE_MESSAGE
 from reviews.models import User
 
-FROM_EMAIL = 'info@yamdb.com'
-EMAIL_SUBJECT = 'Registration in YaMDb'
 EMAIL_MASSAGE = format('Confirmation code: {code}')
-WRONG_CODE_MESSAGE = 'Confirmation code is incorrect'
 
 
 class UserViewSet(viewsets.ModelViewSet):
