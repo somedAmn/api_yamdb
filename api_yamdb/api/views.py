@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import AccessToken
 
+from api_yamdb.settings import EMAIL_SUBJECT, FROM_EMAIL, WRONG_CODE_MESSAGE
 from reviews.models import Category, Genre, Review, Title, User
 from .filters import TitleFilter
 from .mixins import CreateListDeleteViewSet
@@ -22,10 +23,8 @@ from .serializers import (CategorySerializer, CommentSerializer,
                           TitlePostSerializer, TitleSerializer,
                           TokenSerializer, UserSerializer)
 
-FROM_EMAIL = 'info@yamdb.com'
-EMAIL_SUBJECT = 'Registration in YaMDb'
+
 EMAIL_MASSAGE = format('Confirmation code: {code}')
-WRONG_CODE_MESSAGE = 'Confirmation code is incorrect'
 
 
 class CategoryGenreViewSet(CreateListDeleteViewSet):
